@@ -8,13 +8,27 @@ model = joblib.load('starbucks_model.joblib')
 st.title("Starbucks Beverage Category Predictor")
 st.write("Enter the nutritional details to predict the beverage category.")
 
-# Yahan user inputs add karein (apne features ke mutabiq)
-calories = st.number_input("Calories", min_value=0, max_value=500, value=100)
-total_fat = st.number_input("Total Fat (g)", min_value=0.0, max_value=50.0, value=5.0)
+# User inputs for all required features
+calories = st.number_input("Calories", value=100)
+fat = st.number_input("Fat (g)", value=0.0)
+trans_fat = st.number_input("Trans Fat (g)", value=0.0)
+saturated_fat = st.number_input("Saturated Fat (g)", value=0.0)
+sodium = st.number_input("Sodium (mg)", value=0)
+carbs = st.number_input("Carbs (g)", value=0)
+fiber = st.number_input("Fiber (g)", value=0.0)
+sugar = st.number_input("Sugar (g)", value=0.0)
+protein = st.number_input("Protein (g)", value=0.0)
+caffeine = st.number_input("Caffeine (mg)", value=0.0)
 
 if st.button("Predict"):
-    # Input ko DataFrame mein convert karein (training features ke sath match karte hue)
-    input_data = pd.DataFrame([[calories, total_fat]], columns=['Calories', 'Total Fat (g)'])
+    # Training features ke mutabiq dataframe banayein
+    input_data = pd.DataFrame([[
+        calories, fat, trans_fat, saturated_fat, sodium, 
+        carbs, fiber, sugar, protein, caffeine
+    ]], columns=[
+        'Calories', 'Fat (g)', 'Trans Fat (g)', 'Saturated Fat (g)', 'Sodium (mg)', 
+        'Carb. (g)', 'Fiber (g)', 'Sugar (g)', 'Protein (g)', 'Caffeine (mg)'
+    ])
     
     # Prediction perform karein
     prediction = model.predict(input_data)
